@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">UNASP-PHPMySql</string>
+    <string name="hint"><font size="10">Lembre-se de manter as notícias civilizadas! Posts abusivos contendo
+    racismo, homofobia, intolerância ou ataques pessoais não são permitidos.</font></string>
+</resources>
