@@ -1,16 +1,31 @@
 package com.example.marcos.unasp_phpmysql;
 
+import android.content.Intent;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.example.marcos.unasp_phpmysql.Model.Result;
 import com.example.marcos.unasp_phpmysql.Model.User;
 import com.example.marcos.unasp_phpmysql.PHP.APIService;
 import com.example.marcos.unasp_phpmysql.PHP.APIUrl;
+import com.example.marcos.unasp_phpmysql.PHP.Constants;
+import com.example.marcos.unasp_phpmysql.PHP.RequestHandler;
+import com.example.marcos.unasp_phpmysql.SharedPreferences.SharedPrefManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -22,7 +37,7 @@ public class SignUpActivity extends AppCompatActivity {
 
 
     private TextInputEditText editTextUsername, editTextEmail, editTextPassword, editTextConfirmPassword;
-    private ProgressBar bar;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,60 +49,57 @@ public class SignUpActivity extends AppCompatActivity {
         editTextPassword = findViewById(R.id.editTextLoginPassword);
         editTextConfirmPassword = findViewById(R.id.editTextConfirmPassword);
 
-        bar = findViewById(R.id.progressBar);
-        bar.setVisibility(View.INVISIBLE);
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     public void registerUser(View view) {
 
-        //defining a progress dialog to show while signing up
-        bar.setVisibility(View.VISIBLE);
+        final String username = editTextUsername.getText().toString().trim();
+        final String password = editTextEmail.getText().toString().trim();
+        final String email = editTextPassword.getText().toString().trim();
 
-        //getting the user values
-        String username = editTextUsername.getText().toString().trim();
-        String email = editTextEmail.getText().toString().trim();
-        String password = editTextPassword.getText().toString().trim();
+        progressBar.setVisibility(View.VISIBLE);
 
-        //building retrofit object
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(APIUrl.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        //Defining retrofit api service
-        APIService service = retrofit.create(APIService.class);
-
-        //Defining the user object as we need to pass it with the call
-        User user = new User(username, email, password);
-
-        //defining the call
-        Call<Result> call = service.createUser(
-                user.getUsername(),
-                user.getEmail(),
-                user.getPassword()
-        );
-
-        //calling the api
-        call.enqueue(new Callback<Result>() {
-
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.URL_REGISTER, new com.android.volley.Response.Listener<String>(){
             @Override
-            public void onResponse(Call<Result> call, Response<Result> response) {
-                //hiding progress dialog
-                bar.setVisibility(View.INVISIBLE);
-
-                //displaying the message from the response as toast
+            public void onResponse(String response) {
+                progressBar.setVisibility(View.GONE);
                 try {
-                    Toast.makeText(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
-                } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(),"erro: " + e, Toast.LENGTH_LONG).show();
+                    JSONObject obj = new JSONObject(response);
+                    if (!obj.getBoolean("error")){
+
+                        Toast.makeText(getApplicationContext(), "Usuario registrado com sucesso", Toast.LENGTH_LONG).show();
+
+                    }else{
+                        Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
-
+        }, new com.android.volley.Response.ErrorListener() {
             @Override
-            public void onFailure(Call<Result> call, Throwable t) {
-                bar.setVisibility(View.INVISIBLE);
-                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+            public void onErrorResponse(VolleyError error) {
+
             }
-        });
+        }
+        ){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("username", username);
+                params.put("email", email);
+                params.put("password", password);
+                return params;
+            }
+        };
+        RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
+    }
+
+    public void Cancelar(View view){
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

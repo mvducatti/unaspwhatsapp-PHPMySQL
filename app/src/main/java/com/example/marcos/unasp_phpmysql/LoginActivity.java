@@ -66,7 +66,6 @@ public class LoginActivity extends AppCompatActivity {
                                 User user = new User(obj.getInt("id"), obj.getString("username"), obj.getString("email")
                                 );
 
-
                                 SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
                                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                 finish();

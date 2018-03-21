@@ -10,4 +10,6 @@ public class Constants {
     public static final String URL_LOGIN = ROOT_URL+"userLogin.php";
 
     public static final String URL_REGISTER_NEWS = ROOT_URL+"registerNews.php";
+
+    public static final String URL_SHOW_NEWS = ROOT_URL+"getAllNews.php";
 }
