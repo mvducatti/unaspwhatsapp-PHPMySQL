@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements NewsAdapter.OnIte
 
     private TextView textviewUsername, textviewUserEmail;
     ArrayList<News> newsArrayList;
+    private LinearLayoutManager mLayoutManager;
     RecyclerView recyclerView;
 
     @Override
@@ -51,11 +52,17 @@ public class MainActivity extends AppCompatActivity implements NewsAdapter.OnIte
         textviewUserEmail = findViewById(R.id.txtViewUserEmail);
         textviewUsername.setText(SharedPrefManager.getInstance(this).getUser().getUsername());
         textviewUserEmail.setText(SharedPrefManager.getInstance(this).getUser().getEmail());
-
-
         recyclerView = findViewById(R.id.recylerView);
+
+        mLayoutManager = new LinearLayoutManager(getApplicationContext());
+
+        //Invert the view of the list
+        mLayoutManager.setReverseLayout(true);
+        mLayoutManager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(mLayoutManager);
+
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
         newsArrayList = new ArrayList<>();
 
         loadProducts();
