@@ -21,7 +21,8 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".PostNews"></activity>
+        <activity android:name=".PostNews" />
+        <activity android:name=".NewsDetailActivity"></activity>
     </application>
 
 </manifest>

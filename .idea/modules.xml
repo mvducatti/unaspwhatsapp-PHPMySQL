@@ -3,9 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/UNASP - PHPMYSQL.iml" filepath="$PROJECT_DIR$/UNASP - PHPMYSQL.iml" />
-      <module fileurl="file://C:\Users\marcos\Documents\Programação\[ANDROID SUDIO]\UNASP - PHPMYSQL\UNASPPHPMySql.iml" filepath="C:\Users\marcos\Documents\Programação\[ANDROID SUDIO]\UNASP - PHPMYSQL\UNASPPHPMySql.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\Users\marcos\Documents\Programação\[ANDROID SUDIO]\UNASP - PHPMYSQL\app\app.iml" filepath="C:\Users\marcos\Documents\Programação\[ANDROID SUDIO]\UNASP - PHPMYSQL\app\app.iml" />
     </modules>
   </component>
 </project>
