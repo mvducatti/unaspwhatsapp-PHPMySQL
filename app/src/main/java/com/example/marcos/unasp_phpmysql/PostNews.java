@@ -31,6 +31,7 @@ public class PostNews extends AppCompatActivity {
     private ProgressBar progressBar;
     SharedPrefManager sharedPrefManager;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -1,6 +1,7 @@
 package com.example.marcos.unasp_phpmysql;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -27,6 +28,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.Handler;
 
 public class MainActivity extends AppCompatActivity implements NewsAdapter.OnItemClickListener{
 
@@ -47,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements NewsAdapter.OnIte
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         }
+
 
         textviewUsername = findViewById(R.id.txtViewusername);
         textviewUserEmail = findViewById(R.id.txtViewUserEmail);
@@ -115,6 +120,7 @@ public class MainActivity extends AppCompatActivity implements NewsAdapter.OnIte
         //adding our stringrequest to queue
         Volley.newRequestQueue(this).add(request);
     }
+
 
     public void logout(View view){
         SharedPrefManager.getInstance(this).logout();
