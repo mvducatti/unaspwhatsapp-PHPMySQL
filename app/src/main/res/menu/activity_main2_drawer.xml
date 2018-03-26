@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_perfil"
+            android:icon="@drawable/user"
+            android:title="Perfil" />
+        <item
+            android:id="@+id/nav_comprar"
+            android:icon="@drawable/buy"
+            android:title="Comprar" />
+        <item
+            android:id="@+id/nav_vender"
+            android:icon="@drawable/sell"
+            android:title="Vender" />
+        <item
+            android:id="@+id/nav_estoque"
+            android:icon="@drawable/trolley"
+            android:title="Meu Estoque" />
+    </group>
+
+</menu>

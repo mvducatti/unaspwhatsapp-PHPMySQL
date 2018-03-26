@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import static com.example.marcos.unasp_phpmysql.MainActivity.EXTRA_NEWS;
 
-public class NewsDetailActivity extends AppCompatActivity {
+public class ProductDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

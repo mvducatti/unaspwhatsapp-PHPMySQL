@@ -8,6 +8,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.example.marcos.unasp_phpmysql.LoginActivity;
+import com.example.marcos.unasp_phpmysql.Main2Activity;
 import com.example.marcos.unasp_phpmysql.MainActivity;
 import com.example.marcos.unasp_phpmysql.R;
 
@@ -38,7 +39,7 @@ public class SplashScreen extends AppCompatActivity {
                     startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                     finish();
                 } else if (SharedPrefManager.getInstance(getApplicationContext()).isLoggedIn()){
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    startActivity(new Intent(getApplicationContext(), Main2Activity.class));
                     finish();
                 }
             }

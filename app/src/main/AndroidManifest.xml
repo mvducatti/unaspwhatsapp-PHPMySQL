@@ -21,8 +21,14 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".PostNews" />
-        <activity android:name=".NewsDetailActivity"></activity>
+        <activity android:name=".PostProduct" />
+        <activity android:name=".ProductDetailActivity" />
+        <activity
+            android:name=".Main2Activity"
+            android:label="@string/title_activity_main2"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".UserProfile" />
+        <activity android:name=".Estoque"></activity>
     </application>
 
 </manifest>

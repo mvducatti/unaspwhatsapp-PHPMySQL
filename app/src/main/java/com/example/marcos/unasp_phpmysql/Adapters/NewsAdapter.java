@@ -7,11 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.marcos.unasp_phpmysql.Model.News;
+import com.example.marcos.unasp_phpmysql.Model.Product;
 import com.example.marcos.unasp_phpmysql.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by marcos on 19/03/2018.
@@ -20,7 +19,7 @@ import java.util.List;
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsAdapterViewHolder> {
 
     private Context context;
-    private ArrayList<News> newsArrayList;
+    private ArrayList<Product> productArrayList;
     //creating a listener for the interface with the same name as our interface
     private OnItemClickListener xListener;
 
@@ -34,9 +33,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsAdapterVie
         xListener = listener;
     }
 
-    public NewsAdapter(Context context, ArrayList<News> newsArrayList) {
+    public NewsAdapter(Context context, ArrayList<Product> productArrayList) {
         this.context = context;
-        this.newsArrayList = newsArrayList;
+        this.productArrayList = productArrayList;
     }
 
     @Override
@@ -47,24 +46,37 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsAdapterVie
 
     @Override
     public void onBindViewHolder(NewsAdapterViewHolder holder, int position) {
-        News currentNews = newsArrayList.get(position);
+        Product currentProduct = productArrayList.get(position);
 
-        String post = currentNews.getNews_post();
+        String post = currentProduct.getProduct_name();
+        String preco = String.valueOf(currentProduct.getProduct_price());
+        String origin = currentProduct.getProduct_origin();
+        String status = currentProduct.getProduct_status();
 
-        holder.txtNoticia.setText(post);
+            holder.txtNoticia.setText(post);
+            holder.txtOrigin.setText(origin);
+            holder.txtPreco.setText(preco);
+            holder.txtStatus.setText(status);
+
     }
 
     @Override
     public int getItemCount() {
-        return newsArrayList.size();
+        return productArrayList.size();
     }
 
     public class NewsAdapterViewHolder extends RecyclerView.ViewHolder{
         public TextView txtNoticia;
+        public TextView txtPreco;
+        public TextView txtOrigin;
+        public TextView txtStatus;
 
         public NewsAdapterViewHolder(View itemView) {
             super(itemView);
             txtNoticia = itemView.findViewById(R.id.txtnewsPost);
+            txtPreco = itemView.findViewById(R.id.txtPreco);
+            txtOrigin = itemView.findViewById(R.id.txtOrigin);
+            txtStatus = itemView.findViewById(R.id.txtStatus);
 
             //creating the option for when we click on something to work
             //-------------------------WARNING--------------------------//

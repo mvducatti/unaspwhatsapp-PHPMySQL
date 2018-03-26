@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         if (SharedPrefManager.getInstance(this).isLoggedIn()){
-            startActivity(new Intent(this, MainActivity.class));
+            startActivity(new Intent(this, Main2Activity.class));
             finish();
             return;
         }
@@ -63,11 +63,11 @@ public class LoginActivity extends AppCompatActivity {
                             JSONObject obj = new JSONObject(response);
                             if (!obj.getBoolean("error")){
 
-                                User user = new User(obj.getInt("id"), obj.getString("username"), obj.getString("email")
-                                );
+                                User user = new User(obj.getInt("id"), obj.getString("username"), obj.getString("email"),
+                                        obj.getString("password"));
 
                                 SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
-                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                startActivity(new Intent(getApplicationContext(), Main2Activity.class));
                                 finish();
 
                                 Toast.makeText(getApplicationContext(), "User login sucessfull", Toast.LENGTH_LONG).show();

@@ -35,7 +35,6 @@ public class SignUpActivity extends AppCompatActivity {
         editTextUsername = findViewById(R.id.editTextLoginUsername);
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextLoginPassword);
-        editTextConfirmPassword = findViewById(R.id.editTextConfirmPassword);
 
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.INVISIBLE);
@@ -44,8 +43,8 @@ public class SignUpActivity extends AppCompatActivity {
     public void registerUser(View view) {
 
         final String username = editTextUsername.getText().toString().trim();
-        final String password = editTextEmail.getText().toString().trim();
-        final String email = editTextPassword.getText().toString().trim();
+        final String email = editTextEmail.getText().toString().trim();
+        final String password = editTextPassword.getText().toString().trim();
 
         progressBar.setVisibility(View.VISIBLE);
 
@@ -57,7 +56,7 @@ public class SignUpActivity extends AppCompatActivity {
                     JSONObject obj = new JSONObject(response);
                     if (!obj.getBoolean("error")){
 
-                        Toast.makeText(getApplicationContext(), "Usuario registrado com sucesso", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_LONG).show();
 
                     }else{
                         Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_LONG).show();
@@ -69,6 +68,8 @@ public class SignUpActivity extends AppCompatActivity {
         }, new com.android.volley.Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+
+                Toast.makeText(getApplicationContext(), "Erro: " + error.getMessage(), Toast.LENGTH_LONG).show();
 
             }
         }

@@ -1,7 +1,6 @@
 package com.example.marcos.unasp_phpmysql;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -15,10 +14,9 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.marcos.unasp_phpmysql.Adapters.NewsAdapter;
-import com.example.marcos.unasp_phpmysql.Model.News;
+import com.example.marcos.unasp_phpmysql.Model.Product;
 import com.example.marcos.unasp_phpmysql.PHP.Constants;
 import com.example.marcos.unasp_phpmysql.SharedPreferences.SharedPrefManager;
 
@@ -27,18 +25,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.logging.Handler;
 
 public class MainActivity extends AppCompatActivity implements NewsAdapter.OnItemClickListener{
 
     //variable to hold the information that we want to pass to another activity
     public static final String EXTRA_NEWS = "newspost";
 
-    private TextView textviewUsername, textviewUserEmail;
-    ArrayList<News> newsArrayList;
+    ArrayList<Product> productArrayList;
     private LinearLayoutManager mLayoutManager;
     RecyclerView recyclerView;
 
@@ -47,16 +40,6 @@ public class MainActivity extends AppCompatActivity implements NewsAdapter.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (!SharedPrefManager.getInstance(this).isLoggedIn()){
-            startActivity(new Intent(this, LoginActivity.class));
-            finish();
-        }
-
-
-        textviewUsername = findViewById(R.id.txtViewusername);
-        textviewUserEmail = findViewById(R.id.txtViewUserEmail);
-        textviewUsername.setText(SharedPrefManager.getInstance(this).getUser().getUsername());
-        textviewUserEmail.setText(SharedPrefManager.getInstance(this).getUser().getEmail());
         recyclerView = findViewById(R.id.recylerView);
 
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -68,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements NewsAdapter.OnIte
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        newsArrayList = new ArrayList<>();
+        productArrayList = new ArrayList<>();
 
         loadProducts();
     }
@@ -88,32 +71,39 @@ public class MainActivity extends AppCompatActivity implements NewsAdapter.OnIte
                     public void onResponse(JSONObject response) {
                         try {
                             //converting the string to json array object
-                            JSONArray jsonArray = response.getJSONArray("news");
+                            JSONArray jsonArray = response.getJSONArray("products");
 
                             //traversing through all the object
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 //getting product object from json array
                                 JSONObject jsnews = jsonArray.getJSONObject(i);
                                 //adding the product to product list
-                                String post = jsnews.getString("noticia");
-                                newsArrayList.add(new News(post));
+                                try {
+                                    String post = jsnews.getString("product_name");
+                                    int preco = jsnews.getInt("product_price");
+                                    String origin = jsnews.getString("product_origin");
+                                    String status = jsnews.getString("product_status");
+                                    productArrayList.add(new Product(post, preco, origin, status));
+                                } catch (JSONException e) {
+                                    Toast.makeText(getApplicationContext(), "quase: " + e, Toast.LENGTH_LONG).show();
+                                }
                             }
 
                             //creating adapter object and setting it to recyclerview
-                            NewsAdapter adapter = new NewsAdapter(MainActivity.this, newsArrayList);
+                            NewsAdapter adapter = new NewsAdapter(MainActivity.this, productArrayList);
                             recyclerView.setAdapter(adapter);
                             /* ------ SETTING OUR ADAPTER TO OUR ONCLICKLISTERNER ---------*/
                             adapter.setOnClickListener(MainActivity.this);
 
                         } catch (JSONException e) {
-                            Toast.makeText(getApplicationContext(), "Parou aqui", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Parou aqui: " + e, Toast.LENGTH_LONG).show();
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), "Algo de errad nao esta certo", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Algo de errado nao esta certo", Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -121,24 +111,20 @@ public class MainActivity extends AppCompatActivity implements NewsAdapter.OnIte
         Volley.newRequestQueue(this).add(request);
     }
 
-
-    public void logout(View view){
-        SharedPrefManager.getInstance(this).logout();
-        startActivity(new Intent(this, LoginActivity.class));
-        finish();
-    }
-
     public void post(View view){
-        startActivity(new Intent(this, PostNews.class));
+        startActivity(new Intent(this, PostProduct.class));
     }
 
     @Override
     public void onItemClick(int position) {
         /* -------------- DO WHATEVER YOU WANT WITH THE CLICK EVENT HERE------------------ */
-        Intent newsDetail = new Intent(this, NewsDetailActivity.class);
-        News clickedNews = newsArrayList.get(position);
+        Intent newsDetail = new Intent(this, ProductDetailActivity.class);
+        Product clickedProduct = productArrayList.get(position);
 
-        newsDetail.putExtra(EXTRA_NEWS, clickedNews.getNews_post());
+        newsDetail.putExtra(EXTRA_NEWS, clickedProduct.getProduct_name());
+        newsDetail.putExtra(EXTRA_NEWS, clickedProduct.getProduct_price());
+        newsDetail.putExtra(EXTRA_NEWS, clickedProduct.getProduct_origin());
+        newsDetail.putExtra(EXTRA_NEWS, clickedProduct.getProduct_status());
 
         startActivity(newsDetail);
     }
