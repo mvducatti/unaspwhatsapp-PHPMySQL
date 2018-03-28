@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * Created by marcos on 19/03/2018.
  */
 
-public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsAdapterViewHolder> {
+public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.NewsAdapterViewHolder> {
 
     private Context context;
     private ArrayList<Product> productArrayList;
@@ -33,7 +33,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsAdapterVie
         xListener = listener;
     }
 
-    public NewsAdapter(Context context, ArrayList<Product> productArrayList) {
+    public ProductAdapter(Context context, ArrayList<Product> productArrayList) {
         this.context = context;
         this.productArrayList = productArrayList;
     }

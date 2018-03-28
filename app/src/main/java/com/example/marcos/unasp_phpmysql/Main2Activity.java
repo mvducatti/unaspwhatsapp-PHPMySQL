@@ -91,7 +91,11 @@ public class Main2Activity extends AppCompatActivity
             Intent intent = new Intent(getApplicationContext(), PostProduct.class);
             startActivity(intent);
         } else if (id == R.id.nav_estoque) {
-
+            Intent intent = new Intent(getApplicationContext(), Estoque.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_pedidos) {
+//            Intent intent = new Intent(getApplicationContext(), Pedidos.class);
+//            startActivity(intent);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

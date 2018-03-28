@@ -7,7 +7,7 @@ package com.example.marcos.unasp_phpmysql.Model;
 public class Product {
 
     private String product_name, product_origin, product_status;
-    private double product_price;
+    private int product_price;
 
     public Product(String product_name, int product_price, String product_origin, String product_status) {
         this.product_name = product_name;
@@ -20,7 +20,7 @@ public class Product {
         return product_name;
     }
 
-    public double getProduct_price() {
+    public int getProduct_price() {
         return product_price;
     }
 

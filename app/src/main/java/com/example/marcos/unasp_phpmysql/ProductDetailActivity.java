@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import static com.example.marcos.unasp_phpmysql.MainActivity.EXTRA_NEWS;
+import static com.example.marcos.unasp_phpmysql.MainActivity.EXTRA_ORIGIN;
+import static com.example.marcos.unasp_phpmysql.MainActivity.EXTRA_PRICE;
+import static com.example.marcos.unasp_phpmysql.MainActivity.EXTRA_STATUS;
 
 public class ProductDetailActivity extends AppCompatActivity {
 
@@ -16,9 +19,18 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String news_post = intent.getStringExtra(EXTRA_NEWS);
+        String productPrice = intent.getStringExtra(EXTRA_PRICE);
+        String productOrigin = intent.getStringExtra(EXTRA_ORIGIN);
+        String productStatus = intent.getStringExtra(EXTRA_STATUS);
 
-        TextView txtNewsHolder = findViewById(R.id.newsPostPlaceholder);
+        TextView txtProductNameDetail = findViewById(R.id.txtproductnameDetail);
+        TextView txtProductPriceDetail = findViewById(R.id.txtpriceDetail);
+        TextView txtProductOriginDetail = findViewById(R.id.txtoriginDetail);
+        TextView txtProductStatusDetail = findViewById(R.id.txtstatusDetail);
 
-        txtNewsHolder.setText(news_post);
+        txtProductNameDetail.setText(news_post);
+        txtProductPriceDetail.setText(productPrice);
+        txtProductOriginDetail.setText(productOrigin);
+        txtProductStatusDetail.setText(productStatus);
     }
 }

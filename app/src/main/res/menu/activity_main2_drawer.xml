@@ -20,6 +20,11 @@
             android:id="@+id/nav_estoque"
             android:icon="@drawable/trolley"
             android:title="Meu Estoque" />
+
+        <item
+            android:id="@+id/nav_pedidos"
+            android:icon="@drawable/checkmark"
+            android:title="Pedidos" />
     </group>
 
 </menu>

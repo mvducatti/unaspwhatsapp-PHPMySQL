@@ -7,7 +7,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -15,10 +14,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.marcos.unasp_phpmysql.Adapters.NewsAdapter;
+import com.example.marcos.unasp_phpmysql.Adapters.ProductAdapter;
 import com.example.marcos.unasp_phpmysql.Model.Product;
 import com.example.marcos.unasp_phpmysql.PHP.Constants;
-import com.example.marcos.unasp_phpmysql.SharedPreferences.SharedPrefManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,10 +24,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements NewsAdapter.OnItemClickListener{
+public class MainActivity extends AppCompatActivity implements ProductAdapter.OnItemClickListener{
 
     //variable to hold the information that we want to pass to another activity
     public static final String EXTRA_NEWS = "newspost";
+    public static final String EXTRA_PRICE = "productprice";
+    public static final String EXTRA_ORIGIN = "productorigin";
+    public static final String EXTRA_STATUS = "productstatus";
 
     ArrayList<Product> productArrayList;
     private LinearLayoutManager mLayoutManager;
@@ -58,13 +59,6 @@ public class MainActivity extends AppCompatActivity implements NewsAdapter.OnIte
 
     private void loadProducts() {
 
-        /*
-        * Creating a String Request
-        * The request type is GET defined by first parameter
-        * The URL is defined in the second parameter
-        * Then we have a Response Listener and a Error Listener
-        * In response listener we will get the JSON response as a String
-        * */
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, Constants.URL_SHOW_NEWS, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -90,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements NewsAdapter.OnIte
                             }
 
                             //creating adapter object and setting it to recyclerview
-                            NewsAdapter adapter = new NewsAdapter(MainActivity.this, productArrayList);
+                            ProductAdapter adapter = new ProductAdapter(MainActivity.this, productArrayList);
                             recyclerView.setAdapter(adapter);
                             /* ------ SETTING OUR ADAPTER TO OUR ONCLICKLISTERNER ---------*/
                             adapter.setOnClickListener(MainActivity.this);
@@ -103,16 +97,12 @@ public class MainActivity extends AppCompatActivity implements NewsAdapter.OnIte
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), "Algo de errado nao esta certo", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Não existe nada a venda ainda", Toast.LENGTH_LONG).show();
                     }
                 });
 
         //adding our stringrequest to queue
         Volley.newRequestQueue(this).add(request);
-    }
-
-    public void post(View view){
-        startActivity(new Intent(this, PostProduct.class));
     }
 
     @Override
@@ -122,10 +112,16 @@ public class MainActivity extends AppCompatActivity implements NewsAdapter.OnIte
         Product clickedProduct = productArrayList.get(position);
 
         newsDetail.putExtra(EXTRA_NEWS, clickedProduct.getProduct_name());
-        newsDetail.putExtra(EXTRA_NEWS, clickedProduct.getProduct_price());
-        newsDetail.putExtra(EXTRA_NEWS, clickedProduct.getProduct_origin());
-        newsDetail.putExtra(EXTRA_NEWS, clickedProduct.getProduct_status());
+        newsDetail.putExtra(EXTRA_PRICE, clickedProduct.getProduct_price());
+        newsDetail.putExtra(EXTRA_ORIGIN, clickedProduct.getProduct_origin());
+        newsDetail.putExtra(EXTRA_STATUS, clickedProduct.getProduct_status());
 
         startActivity(newsDetail);
+    }
+
+    public void atualizar (View view){
+
+            productArrayList.clear();
+            loadProducts();
     }
 }

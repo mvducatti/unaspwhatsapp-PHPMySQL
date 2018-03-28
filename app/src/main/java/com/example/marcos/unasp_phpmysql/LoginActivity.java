@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void userLogin(View view){
-        final String username = editTextLoginUsername.getText().toString().trim();
+        final String email = editTextLoginUsername.getText().toString().trim();
         final String password = editTextLoginPassword.getText().toString().trim();
 
         progressBar.setVisibility(View.VISIBLE);
@@ -89,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("username", username);
+                params.put("email", email);
                 params.put("password", password);
                 return params;
             }
