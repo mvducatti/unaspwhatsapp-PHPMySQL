@@ -22,7 +22,6 @@
         <activity android:name=".SignUpActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".Vendedor.PostProduct" />
-        <activity android:name=".ProductDetailActivity" />
         <activity
             android:name=".MainMenu"
             android:label="@string/title_activity_main2"
@@ -30,7 +29,9 @@
         <activity android:name=".UserProfile" />
         <activity android:name=".Vendedor.Estoque" />
         <activity android:name=".Comprador.MinhasReservas" />
-        <activity android:name=".Vendedor.MyBiddedItems"></activity>
+        <activity android:name=".Vendedor.MyBiddedItems" />
+        <activity android:name=".MyBoughtItems" />
+        <activity android:name=".SoldItems"></activity>
     </application>
 
 </manifest>

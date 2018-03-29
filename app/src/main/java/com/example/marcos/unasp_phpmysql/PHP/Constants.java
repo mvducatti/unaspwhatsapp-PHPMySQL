@@ -14,4 +14,8 @@ public class Constants {
 
     public static final String URL_RESERVE_PRODUCT = ROOT_URL+"reserveProduct.php";
 
+    public static final String URL_SELL_PRODUCT = ROOT_URL+"sellProduct.php";
+
+    public static final String URL_CANCEL_RESERVATION = ROOT_URL+"cancelReservation.php";
+
 }

@@ -101,6 +101,14 @@ public class MainMenu extends AppCompatActivity
             Intent intent = new Intent(getApplicationContext(), MyBiddedItems.class);
             startActivity(intent);
         }
+        else if (id == R.id.nav_bought) {
+            Intent intent = new Intent(getApplicationContext(), MyBoughtItems.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.nav_sold) {
+            Intent intent = new Intent(getApplicationContext(), SoldItems.class);
+            startActivity(intent);
+        }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

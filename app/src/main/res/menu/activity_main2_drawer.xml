@@ -11,6 +11,18 @@
                 android:id="@+id/nav_perfil"
                 android:icon="@drawable/user"
                 android:title="Perfil" />
+
+                <item
+                    android:id="@+id/nav_sold"
+                    android:icon="@drawable/buyout"
+                    android:title="Produtos Vendidos" />
+
+
+                <item
+                    android:id="@+id/nav_bought"
+                    android:icon="@drawable/bought"
+                    android:title="Produtos Comprados" />
+
             </group>
 
         </menu>
@@ -33,7 +45,7 @@
 
         <item
             android:id="@+id/nav"
-            android:icon="@drawable/checkmark"
+            android:icon="@drawable/chat"
             android:title="Querem Comprar" />
 
     </group>
@@ -50,7 +62,7 @@
                     android:title="Comprar" />
                 <item
                     android:id="@+id/nav_pedidos"
-                    android:icon="@drawable/checkmark"
+                    android:icon="@drawable/ask"
                     android:title="Pedidos que Fiz" />
     </group>
 

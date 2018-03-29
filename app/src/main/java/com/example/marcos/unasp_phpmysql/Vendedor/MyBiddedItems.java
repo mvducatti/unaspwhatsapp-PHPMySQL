@@ -1,6 +1,7 @@
 package com.example.marcos.unasp_phpmysql.Vendedor;
 
-import android.content.Intent;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -8,17 +9,18 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.marcos.unasp_phpmysql.Adapters.ProductAdapter;
-import com.example.marcos.unasp_phpmysql.Comprador.GetAllItems;
-import com.example.marcos.unasp_phpmysql.Comprador.MinhasReservas;
 import com.example.marcos.unasp_phpmysql.Model.Product;
 import com.example.marcos.unasp_phpmysql.Model.User;
-import com.example.marcos.unasp_phpmysql.ProductDetailActivity;
+import com.example.marcos.unasp_phpmysql.PHP.Constants;
+import com.example.marcos.unasp_phpmysql.PHP.RequestHandler;
 import com.example.marcos.unasp_phpmysql.R;
 import com.example.marcos.unasp_phpmysql.SharedPreferences.SharedPrefManager;
 
@@ -27,14 +29,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-
-import static com.example.marcos.unasp_phpmysql.Comprador.GetAllItems.EXTRA_NEWS;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MyBiddedItems extends AppCompatActivity implements ProductAdapter.OnItemClickListener {
 
-    public static final String EXTRA_NEWS = "newspost";
-    public static final String EXTRA_PRICE = "productprice";
+    public static final String EXTRA_PRODUCT_NAME = "productname";
     public static final String EXTRA_ID = "product_id";
+    int productId;
+    String productName;
 
     ArrayList<Product> productArrayList;
     private LinearLayoutManager mLayoutManager;
@@ -114,31 +117,128 @@ public class MyBiddedItems extends AppCompatActivity implements ProductAdapter.O
 
     @Override
     public void onItemClick(int position) {
-        /* -------------- DO WHATEVER YOU WANT WITH THE CLICK EVENT HERE------------------ */
-        Intent newsDetail = new Intent(this, ProductDetailActivity.class);
+
         Product clickedProduct = productArrayList.get(position);
 
-        newsDetail.putExtra(EXTRA_NEWS, clickedProduct.getProduct_name());
-        newsDetail.putExtra(EXTRA_PRICE, clickedProduct.getProduct_price());
-        newsDetail.putExtra(EXTRA_ID, clickedProduct.getProductId());
-            // call some other methods before that I guess...
-            AlertDialog alertDialog = new AlertDialog.Builder(PasswActivity.this).create(); //Read Update
-            alertDialog.setTitle("Uprgade");
-            alertDialog.setMessage("Upgrade Text Here");
+        productName = clickedProduct.getProduct_name();
+        productId = clickedProduct.getProductId();
 
-            alertDialog.setButton("Upgrade", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("O que deseja fazer com o produto: " + productName + "")
+                .setCancelable(false)
+                .setPositiveButton("Vender", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        salvarNoticia();
 
-                });
-                 alertDialog.setButton("Cancel", new DialogInterface.OnClickListener()    {
-                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .setNegativeButton("Cancelar reserva", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        cancelarReserva();
+                    }
+                }).setNeutralButton("Voltar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+                }});
 
-                    });
-
-
-
-                    alertDialog.show();  //<-- See This!
-                }
+        AlertDialog alert = builder.create();
+        alert.show();
 
     }
+
+    public void salvarNoticia() {
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,
+                Constants.URL_SELL_PRODUCT,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+
+                            JSONObject jsonObject = new JSONObject(response);
+                            if (!jsonObject.getBoolean("error")){
+
+                                Toast.makeText(getApplicationContext(), jsonObject.getString("message"),
+                                        Toast.LENGTH_LONG).show();
+
+                                productArrayList.clear();
+                                loadProducts();
+
+                            }else{
+                                Toast.makeText(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_LONG).show();
+                            }
+
+                        } catch (JSONException e) {
+                            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toast.makeText(getApplicationContext(), "Erro: " + error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = null;
+                params = new HashMap<>();
+                params.put("product_id", String.valueOf(productId));
+                return params;
+            }
+        };
+
+        RequestHandler.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
+
+    }
+
+    public void cancelarReserva() {
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,
+                Constants.URL_CANCEL_RESERVATION,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+
+                            JSONObject jsonObject = new JSONObject(response);
+                            if (!jsonObject.getBoolean("error")){
+
+                                Toast.makeText(getApplicationContext(), jsonObject.getString("message"),
+                                        Toast.LENGTH_LONG).show();
+
+                                productArrayList.clear();
+                                loadProducts();
+
+
+                            }else{
+                                Toast.makeText(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_LONG).show();
+                            }
+
+                        } catch (JSONException e) {
+                            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toast.makeText(getApplicationContext(), "Erro: " + error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = null;
+                params = new HashMap<>();
+                params.put("product_id", String.valueOf(productId));
+                return params;
+            }
+        };
+
+        RequestHandler.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
+
+    }
+
 }
