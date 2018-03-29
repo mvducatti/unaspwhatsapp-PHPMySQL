@@ -1,11 +1,10 @@
-package com.example.marcos.unasp_phpmysql;
+package com.example.marcos.unasp_phpmysql.Vendedor;
 
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -21,6 +20,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.marcos.unasp_phpmysql.Model.User;
 import com.example.marcos.unasp_phpmysql.PHP.Constants;
 import com.example.marcos.unasp_phpmysql.PHP.RequestHandler;
+import com.example.marcos.unasp_phpmysql.R;
 import com.example.marcos.unasp_phpmysql.SharedPreferences.SharedPrefManager;
 
 import org.json.JSONException;
@@ -138,7 +138,7 @@ public class PostProduct extends AppCompatActivity {
                         params.put("product_price", price);
                         params.put("product_origin", origin);
                         params.put("product_status", radiovalue);
-                        params.put("user_fk", String.valueOf(user.getId()));
+                        params.put("seller_fk", String.valueOf(user.getId()));
                         return params;
                 }
             };

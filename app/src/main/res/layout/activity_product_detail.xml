@@ -36,14 +36,15 @@
         app:layout_constraintGuide_percent="0.44" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnReservar"
         android:layout_width="383dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:background="@color/olx"
-        android:text="COMPRAR"
+        android:onClick="ReserverProduto"
+        android:text="reservar"
         android:textColor="@color/cardview_light_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"

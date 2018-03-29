@@ -18,7 +18,7 @@ public class UserProfile extends AppCompatActivity {
         setContentView(R.layout.activity_user_profile);
 
         profileName = findViewById(R.id.edtNameProfile);
-        profileName.setText("Usuario: " + SharedPrefManager.getInstance(this).getUser().getUsername());
+        profileName.setText(SharedPrefManager.getInstance(this).getUser().getUsername());
 
         edtEmail = findViewById(R.id.edtEmail);
         edtEmail.setText(SharedPrefManager.getInstance(this).getUser().getEmail());

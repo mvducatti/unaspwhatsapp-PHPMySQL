@@ -1,4 +1,4 @@
-package com.example.marcos.unasp_phpmysql;
+package com.example.marcos.unasp_phpmysql.Comprador;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +17,8 @@ import com.android.volley.toolbox.Volley;
 import com.example.marcos.unasp_phpmysql.Adapters.ProductAdapter;
 import com.example.marcos.unasp_phpmysql.Model.Product;
 import com.example.marcos.unasp_phpmysql.PHP.Constants;
+import com.example.marcos.unasp_phpmysql.ProductDetailActivity;
+import com.example.marcos.unasp_phpmysql.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,13 +26,14 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements ProductAdapter.OnItemClickListener{
+public class GetAllItems extends AppCompatActivity implements ProductAdapter.OnItemClickListener{
 
     //variable to hold the information that we want to pass to another activity
     public static final String EXTRA_NEWS = "newspost";
     public static final String EXTRA_PRICE = "productprice";
     public static final String EXTRA_ORIGIN = "productorigin";
     public static final String EXTRA_STATUS = "productstatus";
+    public static final String EXTRA_ID = "product_id";
 
     ArrayList<Product> productArrayList;
     private LinearLayoutManager mLayoutManager;
@@ -77,17 +80,18 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
                                     int preco = jsnews.getInt("product_price");
                                     String origin = jsnews.getString("product_origin");
                                     String status = jsnews.getString("product_status");
-                                    productArrayList.add(new Product(post, preco, origin, status));
+                                    int id = jsnews.getInt("product_id");
+                                    productArrayList.add(new Product(id, post, preco, origin, status));
                                 } catch (JSONException e) {
                                     Toast.makeText(getApplicationContext(), "quase: " + e, Toast.LENGTH_LONG).show();
                                 }
                             }
 
                             //creating adapter object and setting it to recyclerview
-                            ProductAdapter adapter = new ProductAdapter(MainActivity.this, productArrayList);
+                            ProductAdapter adapter = new ProductAdapter(GetAllItems.this, productArrayList);
                             recyclerView.setAdapter(adapter);
                             /* ------ SETTING OUR ADAPTER TO OUR ONCLICKLISTERNER ---------*/
-                            adapter.setOnClickListener(MainActivity.this);
+                            adapter.setOnClickListener(GetAllItems.this);
 
                         } catch (JSONException e) {
                             Toast.makeText(getApplicationContext(), "Parou aqui: " + e, Toast.LENGTH_LONG).show();
@@ -115,6 +119,7 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         newsDetail.putExtra(EXTRA_PRICE, clickedProduct.getProduct_price());
         newsDetail.putExtra(EXTRA_ORIGIN, clickedProduct.getProduct_origin());
         newsDetail.putExtra(EXTRA_STATUS, clickedProduct.getProduct_status());
+        newsDetail.putExtra(EXTRA_ID, clickedProduct.getProductId());
 
         startActivity(newsDetail);
     }

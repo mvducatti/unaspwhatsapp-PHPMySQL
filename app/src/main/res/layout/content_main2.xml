@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/cardview_light_background"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.marcos.unasp_phpmysql.Main2Activity"
+    tools:context="com.example.marcos.unasp_phpmysql.MainMenu"
     tools:showIn="@layout/app_bar_main2">
 
     <ImageView

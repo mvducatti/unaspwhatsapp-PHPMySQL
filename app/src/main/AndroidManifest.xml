@@ -18,17 +18,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".Comprador.GetAllItems" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".PostProduct" />
+        <activity android:name=".Vendedor.PostProduct" />
         <activity android:name=".ProductDetailActivity" />
         <activity
-            android:name=".Main2Activity"
+            android:name=".MainMenu"
             android:label="@string/title_activity_main2"
             android:theme="@style/AppTheme" />
         <activity android:name=".UserProfile" />
-        <activity android:name=".Estoque"></activity>
+        <activity android:name=".Vendedor.Estoque" />
+        <activity android:name=".Comprador.MinhasReservas" />
+        <activity android:name=".Vendedor.MyBiddedItems"></activity>
     </application>
 
 </manifest>

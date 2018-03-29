@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.marcos.unasp_phpmysql.Model.Product;
+import com.example.marcos.unasp_phpmysql.Model.User;
 import com.example.marcos.unasp_phpmysql.R;
 
 import java.util.ArrayList;
@@ -55,7 +56,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.NewsAdap
 
             holder.txtNoticia.setText(post);
             holder.txtOrigin.setText(origin);
-            holder.txtPreco.setText(preco);
+            holder.txtPreco.setText("R$" + preco + ",00");
             holder.txtStatus.setText(status);
 
     }

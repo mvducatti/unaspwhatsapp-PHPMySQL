@@ -6,14 +6,32 @@ package com.example.marcos.unasp_phpmysql.Model;
 
 public class Product {
 
-    private String product_name, product_origin, product_status;
-    private int product_price;
+    private String product_name, product_origin, product_status, comprador;
+    private int product_price, productId;
 
-    public Product(String product_name, int product_price, String product_origin, String product_status) {
+    public Product(int productId, String product_name, int product_price, String product_origin, String product_status) {
+        this.productId = productId;
         this.product_name = product_name;
         this.product_price = product_price;
         this.product_origin = product_origin;
         this.product_status = product_status;
+    }
+
+    public Product(int id, String post, int preco, String origin, String status, String comprador) {
+        this.productId = productId;
+        this.product_name = product_name;
+        this.product_price = product_price;
+        this.product_origin = product_origin;
+        this.product_status = product_status;
+        this.comprador = comprador;
+    }
+
+    public String getComprador() {
+        return comprador;
+    }
+
+    public int getProductId() {
+        return productId;
     }
 
     public String getProduct_name() {

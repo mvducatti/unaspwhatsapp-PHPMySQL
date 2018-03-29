@@ -1,4 +1,4 @@
-package com.example.marcos.unasp_phpmysql;
+package com.example.marcos.unasp_phpmysql.Vendedor;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,10 +12,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.marcos.unasp_phpmysql.Adapters.MyProductAdapter;
 import com.example.marcos.unasp_phpmysql.Adapters.ProductAdapter;
 import com.example.marcos.unasp_phpmysql.Model.Product;
 import com.example.marcos.unasp_phpmysql.Model.User;
+import com.example.marcos.unasp_phpmysql.R;
 import com.example.marcos.unasp_phpmysql.SharedPreferences.SharedPrefManager;
 
 import org.json.JSONArray;
@@ -56,7 +56,7 @@ public class Estoque extends AppCompatActivity {
         final User user = sharedPrefManager.getInstance(this).getUser();
         int id = user.getId();
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, "http://10.2.7.50/android/v1/getMyItems.php?fk_user=" + id + "" , null,
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, "http://10.2.7.50:8080/android/v1/getMyItems.php?fk_user=" + id + "" , null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -74,7 +74,8 @@ public class Estoque extends AppCompatActivity {
                                     int preco = jsnews.getInt("product_price");
                                     String origin = jsnews.getString("product_origin");
                                     String status = jsnews.getString("product_status");
-                                    productArrayList.add(new Product(post, preco, origin, status));
+                                    int id = jsnews.getInt("product_id");
+                                    productArrayList.add(new Product(id, post, preco, origin, status));
                                 } catch (JSONException e) {
                                     Toast.makeText(getApplicationContext(), "quase: " + e, Toast.LENGTH_LONG).show();
                                 }
@@ -100,4 +101,3 @@ public class Estoque extends AppCompatActivity {
         Volley.newRequestQueue(this).add(request);
     }
 }
-

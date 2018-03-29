@@ -20,33 +20,25 @@
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/txtnewsPost"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_weight="1"
-            android:text="nome"
-            card_view:layout_constraintBottom_toTopOf="@+id/guideline4"
-            card_view:layout_constraintStart_toStartOf="@+id/guideline3" />
-
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="61dp"
-            android:layout_height="54dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="4dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="nome"
             card_view:layout_constraintBottom_toTopOf="@+id/guideline4"
-            card_view:layout_constraintEnd_toStartOf="@+id/guideline3"
-            card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toTopOf="@+id/guideline4"
-            card_view:srcCompat="@drawable/logoolx" />
+            card_view:layout_constraintEnd_toStartOf="@+id/txtPreco"
+            card_view:layout_constraintHorizontal_bias="0.0"
+            card_view:layout_constraintStart_toStartOf="@+id/guideline3" />
 
         <TextView
             android:id="@+id/txtPreco"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="4dp"
             android:layout_marginEnd="8dp"
             android:text="preco"
             card_view:layout_constraintBottom_toTopOf="@+id/guideline4"
@@ -57,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:text="origem"
             card_view:layout_constraintStart_toStartOf="@+id/guideline3"
             card_view:layout_constraintTop_toTopOf="@+id/guideline4" />
@@ -67,7 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:text="status"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintTop_toTopOf="@+id/guideline4" />
@@ -85,6 +77,18 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             card_view:layout_constraintGuide_percent="0.5" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="59dp"
+            android:layout_height="47dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            card_view:layout_constraintBottom_toTopOf="@+id/guideline4"
+            card_view:layout_constraintEnd_toStartOf="@+id/guideline3"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toTopOf="@+id/guideline4"
+            card_view:srcCompat="@drawable/logoolx" />
 
 
     </android.support.constraint.ConstraintLayout>

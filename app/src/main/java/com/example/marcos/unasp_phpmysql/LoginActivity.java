@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         if (SharedPrefManager.getInstance(this).isLoggedIn()){
-            startActivity(new Intent(this, Main2Activity.class));
+            startActivity(new Intent(this, MainMenu.class));
             finish();
             return;
         }
@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
                                         obj.getString("password"));
 
                                 SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
-                                startActivity(new Intent(getApplicationContext(), Main2Activity.class));
+                                startActivity(new Intent(getApplicationContext(), MainMenu.class));
                                 finish();
 
                                 Toast.makeText(getApplicationContext(), "User login sucessfull", Toast.LENGTH_LONG).show();
