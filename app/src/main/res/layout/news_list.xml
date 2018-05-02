@@ -28,10 +28,10 @@
             android:text="nome"
             android:textColor="@android:color/darker_gray"
             card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toBottomOf="@+id/imageView4" />
+            card_view:layout_constraintTop_toBottomOf="@+id/ivPosterPicture" />
 
         <ImageView
-            android:id="@+id/imageView4"
+            android:id="@+id/ivPosterPicture"
             android:layout_width="61dp"
             android:layout_height="54dp"
             android:layout_marginTop="8dp"
@@ -40,14 +40,14 @@
             card_view:srcCompat="@drawable/noticias" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/txxNewsPoster"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:text="Marcos Vinicius Ducatti -> CTI"
+            android:text="NewsPoster"
             android:textStyle="bold"
-            card_view:layout_constraintStart_toEndOf="@+id/imageView4"
+            card_view:layout_constraintStart_toEndOf="@+id/ivPosterPicture"
             card_view:layout_constraintTop_toTopOf="parent" />
 
 

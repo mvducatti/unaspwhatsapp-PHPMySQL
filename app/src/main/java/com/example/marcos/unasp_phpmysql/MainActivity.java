@@ -2,6 +2,7 @@ package com.example.marcos.unasp_phpmysql;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -55,7 +56,6 @@ public class MainActivity extends AppCompatActivity implements NewsAdapter.OnIte
 
         textviewUsername = findViewById(R.id.txtViewusername);
         textviewUserEmail = findViewById(R.id.txtViewUserEmail);
-        textviewUsername.setText(SharedPrefManager.getInstance(this).getUser().getUsername());
         textviewUserEmail.setText(SharedPrefManager.getInstance(this).getUser().getEmail());
         recyclerView = findViewById(R.id.recylerView);
 
@@ -94,9 +94,11 @@ public class MainActivity extends AppCompatActivity implements NewsAdapter.OnIte
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 //getting product object from json array
                                 JSONObject jsnews = jsonArray.getJSONObject(i);
-                                //adding the product to product list
-                                String post = jsnews.getString("noticia");
-                                newsArrayList.add(new News(post));
+                                //adding the product to product listW
+                                String post = jsnews.getString("news");
+                                String poster_name = jsnews.getString("poster_name");
+                                String poster_pic = jsnews.getString("poster_picture");
+                                newsArrayList.add(new News(post, poster_name, poster_pic));
                             }
 
                             //creating adapter object and setting it to recyclerview
@@ -106,14 +108,14 @@ public class MainActivity extends AppCompatActivity implements NewsAdapter.OnIte
                             adapter.setOnClickListener(MainActivity.this);
 
                         } catch (JSONException e) {
-                            Toast.makeText(getApplicationContext(), "Parou aqui", Toast.LENGTH_LONG).show();
+                            Snackbar.make(findViewById(android.R.id.content),"Algo deu errado: " + e,Snackbar.LENGTH_LONG).show();
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), "Algo de errad nao esta certo", Toast.LENGTH_LONG).show();
+                        Snackbar.make(findViewById(android.R.id.content),"Algo deu errado",Snackbar.LENGTH_LONG).show();
                     }
                 });
 

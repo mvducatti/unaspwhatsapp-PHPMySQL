@@ -1,6 +1,7 @@
 package com.example.marcos.unasp_phpmysql;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -8,15 +9,20 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -69,14 +75,21 @@ public class SignUpActivity extends AppCompatActivity {
 
     public void registerUser(View view) {
 
+        if (bitmap == null){
+            Snackbar.make(findViewById(android.R.id.content),"Por favor insira uma imagem",Snackbar.LENGTH_LONG).show();
+            return;
+        }
+
         final String image = getStringImage(bitmap);
         final String username = editTextUsername.getText().toString().trim();
-        final String password = editTextEmail.getText().toString().trim();
-        final String email = editTextPassword.getText().toString().trim();
+        final String password = editTextPassword.getText().toString().trim();
+        final String email = editTextEmail.getText().toString().trim();
 
         progressBar.setVisibility(View.VISIBLE);
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.URL_REGISTER, new com.android.volley.Response.Listener<String>(){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.URL_REGISTER,
+                new com.android.volley.Response.Listener<String>(){
+            @SuppressLint("ResourceType")
             @Override
             public void onResponse(String response) {
                 progressBar.setVisibility(View.GONE);
@@ -84,10 +97,15 @@ public class SignUpActivity extends AppCompatActivity {
                     JSONObject obj = new JSONObject(response);
                     if (!obj.getBoolean("error")){
 
-                        Toast.makeText(getApplicationContext(), "Usuario registrado com sucesso", Toast.LENGTH_LONG).show();
+                        Snackbar.make(findViewById(android.R.id.content),obj.getString("message"),Snackbar.LENGTH_LONG).show();
+                        editTextUsername.setText("");
+                        editTextEmail.setText("");
+                        editTextPassword.setText("");
+                        editTextConfirmPassword.setText("");
+                        btnImage.setImageDrawable(null);
 
                     }else{
-                        Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_LONG).show();
+                        Snackbar.make(findViewById(android.R.id.content),obj.getString("message"),Snackbar.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -1,8 +1,10 @@
 package com.example.marcos.unasp_phpmysql;
 
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -27,7 +29,7 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText editTextLoginUsername, editTextLoginPassword;
+    private EditText editTextLoginEmail, editTextLoginPassword;
     private TextView txtViewRegister;
     private ProgressBar progressBar;
 
@@ -41,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        editTextLoginUsername = findViewById(R.id.editTextLoginUsername);
+        editTextLoginEmail = findViewById(R.id.editTextLoginEmail);
         editTextLoginPassword = findViewById(R.id.editTextLoginPassword);
         txtViewRegister = findViewById(R.id.txtViewRegister);
         progressBar = findViewById(R.id.progressBar2);
@@ -50,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void userLogin(View view){
-        final String username = editTextLoginUsername.getText().toString().trim();
+        final String email = editTextLoginEmail.getText().toString().trim();
         final String password = editTextLoginPassword.getText().toString().trim();
 
         progressBar.setVisibility(View.VISIBLE);
@@ -63,17 +65,17 @@ public class LoginActivity extends AppCompatActivity {
                             JSONObject obj = new JSONObject(response);
                             if (!obj.getBoolean("error")){
 
-                                User user = new User(obj.getInt("id"), obj.getString("username"), obj.getString("email")
+                                User user = new User(obj.getInt("user_id"), obj.getString("email")
                                 );
 
                                 SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
                                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                 finish();
 
-                                Toast.makeText(getApplicationContext(), "User login sucessfull", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_LONG).show();
 
                             }else{
-                                Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_LONG).show();
+                                Snackbar.make(findViewById(android.R.id.content),obj.getString("message"),Snackbar.LENGTH_LONG).show();
                             }
                         } catch (JSONException e) {
                                 e.printStackTrace();
@@ -89,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("username", username);
+                params.put("email", email);
                 params.put("password", password);
                 return params;
             }

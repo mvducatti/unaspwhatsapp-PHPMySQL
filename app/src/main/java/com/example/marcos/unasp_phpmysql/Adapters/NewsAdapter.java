@@ -1,10 +1,14 @@
 package com.example.marcos.unasp_phpmysql.Adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.marcos.unasp_phpmysql.Model.News;
@@ -49,9 +53,17 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsAdapterVie
     public void onBindViewHolder(NewsAdapterViewHolder holder, int position) {
         News currentNews = newsArrayList.get(position);
 
+        //TODO pegar news poster do model
+        String news_poster = currentNews.getNews_poster();
         String post = currentNews.getNews_post();
+//      String poster_pic = currentNews.getPoster_profile_pic();
+
+        byte[] decodedString = Base64.decode(currentNews.getPoster_profile_pic(), Base64.DEFAULT);
+        Bitmap poster_pic = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 
         holder.txtNoticia.setText(post);
+        holder.txtPoster.setText(news_poster);
+        holder.iv_poster.setImageBitmap(poster_pic);
     }
 
     @Override
@@ -61,10 +73,14 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsAdapterVie
 
     public class NewsAdapterViewHolder extends RecyclerView.ViewHolder{
         public TextView txtNoticia;
+        public TextView txtPoster;
+        public ImageView iv_poster;
 
         public NewsAdapterViewHolder(View itemView) {
             super(itemView);
             txtNoticia = itemView.findViewById(R.id.txtnewsPost);
+            txtPoster = itemView.findViewById(R.id.txxNewsPoster);
+            iv_poster = itemView.findViewById(R.id.ivPosterPicture);
 
             //creating the option for when we click on something to work
             //-------------------------WARNING--------------------------//
