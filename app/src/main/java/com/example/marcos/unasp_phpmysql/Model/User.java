@@ -4,19 +4,28 @@ package com.example.marcos.unasp_phpmysql.Model;
 public class User {
 
     private int id;
-    private String email, password;
+    private String email;
+    private String name;
 
-    public User(int id,String email) {
+    private String photo;
+
+    public User(int id,String email, String name, String photo) {
         this.id = id;
         this.email = email;
+        this.name = name;
+        this.photo = photo;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public int getId() {
         return id;
-    }
-
-    public String getPassword(){
-        return password;
     }
 
     public String getEmail() {

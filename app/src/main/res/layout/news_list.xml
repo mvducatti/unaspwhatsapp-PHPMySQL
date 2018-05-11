@@ -20,13 +20,15 @@
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/txtnewsPost"
-            android:layout_width="55dp"
+            android:layout_width="0dp"
             android:layout_height="18dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_weight="1"
             android:text="nome"
             android:textColor="@android:color/darker_gray"
+            card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toBottomOf="@+id/ivPosterPicture" />
 
@@ -34,6 +36,7 @@
             android:id="@+id/ivPosterPicture"
             android:layout_width="61dp"
             android:layout_height="54dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toTopOf="parent"
@@ -41,12 +44,14 @@
 
         <TextView
             android:id="@+id/txxNewsPoster"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:text="NewsPoster"
             android:textStyle="bold"
+            card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintStart_toEndOf="@+id/ivPosterPicture"
             card_view:layout_constraintTop_toTopOf="parent" />
 

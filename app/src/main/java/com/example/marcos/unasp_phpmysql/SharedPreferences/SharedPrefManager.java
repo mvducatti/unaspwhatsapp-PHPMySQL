@@ -11,7 +11,8 @@ public class SharedPrefManager {
     private static Context mCtext;
 
     private static final String SHARED_PREF_NAME = "myname";
-//    private static final String KEY_USERNAME = "username";
+    private static final String KEY_USERNAME = "name";
+    private static final String KEY_PHOTO = "photo";
     private static final String KEY_USER_EMAIL = "useremail";
     private static final String KEY_USER_ID = "userid";
 
@@ -34,7 +35,8 @@ public class SharedPrefManager {
 
         editor.putInt(KEY_USER_ID, user.getId());
         editor.putString(KEY_USER_EMAIL, user.getEmail());
-//        editor.putString(KEY_USERNAME, user.getUsername());
+        editor.putString(KEY_USERNAME, user.getName());
+        editor.putString(KEY_PHOTO, user.getPhoto());
 
         editor.apply();
 
@@ -57,8 +59,9 @@ public class SharedPrefManager {
         SharedPreferences sharedPreferences = mCtext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return new User(
                 sharedPreferences.getInt(KEY_USER_ID, -1),
-//                sharedPreferences.getString(KEY_USERNAME, null),
-                sharedPreferences.getString(KEY_USER_EMAIL, null)
+                sharedPreferences.getString(KEY_USER_EMAIL, null),
+                sharedPreferences.getString(KEY_USERNAME, null),
+                sharedPreferences.getString(KEY_PHOTO, null)
         );
     }
 }

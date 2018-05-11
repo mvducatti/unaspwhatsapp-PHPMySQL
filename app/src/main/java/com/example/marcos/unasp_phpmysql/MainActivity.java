@@ -1,6 +1,8 @@
 package com.example.marcos.unasp_phpmysql;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,10 +56,14 @@ public class MainActivity extends AppCompatActivity implements NewsAdapter.OnIte
             finish();
         }
 
-
+        //get username
         textviewUsername = findViewById(R.id.txtViewusername);
+        textviewUsername.setText(SharedPrefManager.getInstance(this).getUser().getName());
+
+        //get email
         textviewUserEmail = findViewById(R.id.txtViewUserEmail);
         textviewUserEmail.setText(SharedPrefManager.getInstance(this).getUser().getEmail());
+
         recyclerView = findViewById(R.id.recylerView);
 
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -95,10 +102,15 @@ public class MainActivity extends AppCompatActivity implements NewsAdapter.OnIte
                                 //getting product object from json array
                                 JSONObject jsnews = jsonArray.getJSONObject(i);
                                 //adding the product to product listW
-                                String post = jsnews.getString("news");
-                                String poster_name = jsnews.getString("poster_name");
-                                String poster_pic = jsnews.getString("poster_picture");
-                                newsArrayList.add(new News(post, poster_name, poster_pic));
+                                String post = jsnews.getString("news_post");
+                                String poster_name = jsnews.getString("users.username");
+                                String poster_pic = jsnews.getString("users.user_profile_pic");
+
+                                //decoding to bitmap
+                                byte[] decodedString = Base64.decode(poster_pic, Base64.DEFAULT);
+                                Bitmap bmp = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+                                newsArrayList.add(new News(post, poster_name, bmp));
                             }
 
                             //creating adapter object and setting it to recyclerview
@@ -115,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements NewsAdapter.OnIte
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Snackbar.make(findViewById(android.R.id.content),"Algo deu errado",Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(findViewById(android.R.id.content),"Algo deu errado: " + error + "",Snackbar.LENGTH_LONG).show();
                     }
                 });
 

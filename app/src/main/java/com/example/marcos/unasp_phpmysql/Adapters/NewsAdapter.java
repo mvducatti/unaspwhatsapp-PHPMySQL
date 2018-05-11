@@ -56,10 +56,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsAdapterVie
         //TODO pegar news poster do model
         String news_poster = currentNews.getNews_poster();
         String post = currentNews.getNews_post();
-//      String poster_pic = currentNews.getPoster_profile_pic();
-
-        byte[] decodedString = Base64.decode(currentNews.getPoster_profile_pic(), Base64.DEFAULT);
-        Bitmap poster_pic = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        Bitmap poster_pic = currentNews.getPoster_profile_pic();
 
         holder.txtNoticia.setText(post);
         holder.txtPoster.setText(news_poster);

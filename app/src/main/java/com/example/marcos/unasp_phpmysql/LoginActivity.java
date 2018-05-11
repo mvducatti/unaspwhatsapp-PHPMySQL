@@ -65,7 +65,8 @@ public class LoginActivity extends AppCompatActivity {
                             JSONObject obj = new JSONObject(response);
                             if (!obj.getBoolean("error")){
 
-                                User user = new User(obj.getInt("user_id"), obj.getString("email")
+                                User user = new User(obj.getInt("user_id"), obj.getString("email"),
+                                        obj.getString("name"), obj.getString("photo")
                                 );
 
                                 SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);

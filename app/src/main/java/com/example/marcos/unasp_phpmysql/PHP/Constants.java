@@ -4,7 +4,7 @@ package com.example.marcos.unasp_phpmysql.PHP;
 public class Constants {
 
 //    conexão principal
-    private static final String ROOT_URL = "http://10.133.212.64:8080/android/v1/";
+    private static final String ROOT_URL = "http://10.133.214.79:8080/android/v1/";
 
 //    conexão secundária acessando os folders users e news
     private static final String ROOT_USERS= "users/";
